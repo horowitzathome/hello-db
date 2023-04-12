@@ -1,0 +1,21 @@
+name: Pipeline
+
+permissions:
+    contents: "write"
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    uses: horowitzathome/rust-workflows/.github/workflows/check.yaml@main
+  build:
+    uses: horowitzathome/rust-workflows/.github/workflows/build_all.yaml@main
+    needs: check
+    with:
+      image: horowitzathome/hello-db
+    secrets:
+      container-registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+      container-registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
