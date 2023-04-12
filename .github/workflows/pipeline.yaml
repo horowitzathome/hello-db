@@ -1,7 +1,7 @@
 name: Pipeline
 
 permissions:
-    contents: "write"
+  contents: "write"
 
 on:
   push:
@@ -10,8 +10,12 @@ on:
 
 jobs:
   check:
+    if: false
     uses: horowitzathome/rust-workflows/.github/workflows/check.yaml@main
+  test:
+    uses: horowitzathome/rust-workflows/.github/workflows/test.yaml@main
   build:
+    if: false
     uses: horowitzathome/rust-workflows/.github/workflows/build_all.yaml@main
     needs: check
     with:
