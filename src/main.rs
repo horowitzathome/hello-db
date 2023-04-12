@@ -27,8 +27,12 @@ mod tests {
 
         dotenv().ok();
 
-        let user_res = std::env::var("DATABASE_URL");
+        let pg_res = std::env::var("DATABASE_URL");
 
-        println!("User = {:?}", user_res);
+        println!("Postgres URL = {:?}", pg_res);
+
+        if let Ok(pg) = pg_res {
+            println!("PG URL = {}", pg);
+        }
     }
 }
