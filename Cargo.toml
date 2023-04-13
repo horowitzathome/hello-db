@@ -30,4 +30,4 @@ assert2 = "0.3.10"
 ctor = "0.2.0"
 
 [target.x86_64-unknown-linux-musl]
-rustflags = ["-C", "link-args=-static -pthread"]
+rustflags = ["-C", "link-args=-static -L/usr/lib/x86_64-linux-gnu -lpthread"]
