@@ -3,6 +3,11 @@
 //#[macro_use]
 //extern crate diesel_migrations;
 
+use crate::db_infra_pool::connection;
+use crate::models::{NewPost, Post};
+use chrono::{DateTime, Utc};
+use diesel::prelude::*;
+use diesel::{PgConnection, RunQueryDsl};
 use dotenv::dotenv;
 
 mod db_infra_pool;
@@ -13,13 +18,45 @@ mod schema;
 
 fn main() {
     println!("Hello, world!");
+
     dotenv().ok();
     db_infra_pool::init();
+
+    let connection = &mut connection();
+
+    create_delete_post(connection);
+}
+
+fn create_delete_post(connection: &mut PgConnection) {
+    let now: DateTime<Utc> = Utc::now();
+    let title = format!("A title at {}", now.to_rfc2822());
+    let body = "This is the body of the post";
+
+    let post = create_post(connection, &title, body);
+    println!("Saved draft post {} with id {}", title, post.id);
+
+    println!("Will now delete post again.");
+    delete_post(connection, post.id);
+}
+
+fn create_post(conn: &mut PgConnection, title: &str, body: &str) -> Post {
+    use crate::schema::posts;
+
+    let new_post = NewPost { title, body };
+    diesel::insert_into(posts::table).values(&new_post).get_result(conn).expect("Error saving new post")
+}
+
+fn delete_post(conn: &mut PgConnection, id_arg: i32) {
+    use crate::schema::posts::dsl::*;
+    diesel::delete(posts.filter(id.eq(id_arg))).execute(conn).unwrap();
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::db_infra_pool;
+    use crate::{
+        create_delete_post,
+        db_infra_pool::{self, connection},
+    };
     use chrono::{DateTime, Utc};
     use dotenv::dotenv;
 
@@ -41,5 +78,14 @@ mod tests {
     fn try_db_init() {
         dotenv().ok();
         db_infra_pool::init();
+    }
+
+    #[test]
+    fn try_create_delete_post() {
+        dotenv().ok();
+        db_infra_pool::init();
+
+        let connection = &mut connection();
+        create_delete_post(connection);
     }
 }
