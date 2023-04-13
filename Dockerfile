@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.3
-# FROM rust:1.65.0 AS builder
-FROM rust:alpine3.17 AS builder
+FROM rust:1.65.0 AS builder
+#FROM rust:alpine3.17 AS builder
 
 ARG TARGETPLATFORM
 ARG TARGET
@@ -8,7 +8,10 @@ ARG RUSTARGS
 
 WORKDIR /root
 
-RUN apk add --no-cache musl-dev=1.2.3-r4
+RUN apt-get update -y
+RUN apt-get install -y musl-dev=1.2.3-r4
+
+# RUN apk add --no-cache musl-dev=1.2.3-r4
 RUN rustup update && rustup target add x86_64-unknown-linux-musl
 
 RUN --mount=type=cache,target=/usr/local/cargo/registry,id=${TARGETPLATFORM} cargo install cargo-strip
