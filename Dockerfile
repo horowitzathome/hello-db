@@ -8,7 +8,7 @@ ARG RUSTARGS
 
 WORKDIR /root
 
-RUN apk add --no-cache musl-dev 
+RUN apk add --no-cache musl-dev=1.1.12-r8 
 RUN rustup update && rustup target add x86_64-unknown-linux-musl
 
 RUN --mount=type=cache,target=/usr/local/cargo/registry,id=${TARGETPLATFORM} cargo install cargo-strip
