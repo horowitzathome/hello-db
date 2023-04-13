@@ -17,7 +17,7 @@ jobs:
   build:
     if: true
     uses: horowitzathome/rust-workflows/.github/workflows/build_all.yaml@main
-    needs: check
+    needs: test
     with:
       image: horowitzathome/hello-db
     secrets:
