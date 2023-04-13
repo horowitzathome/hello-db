@@ -8,8 +8,7 @@ ARG RUSTARGS
 
 WORKDIR /root
 
-RUN echo 'TARGETPLATFORM'
-RUN echo ${TARGETPLATFORM}
+RUN echo 'TARGETPLATFORM = '${TARGETPLATFORM}
 
 RUN apt-get update -y && apt-get install -y --no-install-recommends musl-dev
 
