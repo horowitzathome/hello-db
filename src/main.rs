@@ -60,9 +60,16 @@ mod tests {
     use chrono::{DateTime, Utc};
     use dotenv::dotenv;
 
+    #[ctor::ctor]
+    fn init() {
+        println!("We are in init to initialize environment and database");
+        dotenv().ok();
+        db_infra_pool::init();
+    }
+
     #[test]
     fn test_db_url() {
-        dotenv().ok();
+        //dotenv().ok();
         let pg_res = std::env::var("DATABASE_URL");
 
         println!("Postgres URL = {:?}", pg_res);
@@ -76,14 +83,14 @@ mod tests {
 
     #[test]
     fn try_db_init() {
-        dotenv().ok();
-        db_infra_pool::init();
+        //dotenv().ok();
+        //db_infra_pool::init();
     }
 
     #[test]
     fn try_create_delete_post() {
-        dotenv().ok();
-        db_infra_pool::init();
+        //dotenv().ok();
+        //db_infra_pool::init();
 
         let connection = &mut connection();
         create_delete_post(connection);

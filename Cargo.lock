@@ -102,6 +102,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e496a50fda8aacccc86d7529e2c1e0892dbd0f898a6b5645b5561b89c3210efa"
 
 [[package]]
+name = "ctor"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dd4056f63fce3b82d852c3da92b08ea59959890813a7f4ce9c0ff85b10cf301b"
+dependencies = [
+ "quote",
+ "syn 2.0.14",
+]
+
+[[package]]
 name = "cxx"
 version = "1.0.94"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -222,6 +232,7 @@ version = "0.1.2"
 dependencies = [
  "assert2",
  "chrono",
+ "ctor",
  "diesel",
  "diesel_migrations",
  "dotenv",
