@@ -8,7 +8,7 @@ ARG RUSTARGS
 
 WORKDIR /root
 
-RUN apt-get update -y && apt-get install -y --no-install-recommends musl-dev=1.2.3
+RUN apt-get update -y && apt-get install -y --no-install-recommends musl-dev=1.1.19
 
 # RUN apk add --no-cache musl-dev=1.2.3-r4
 RUN rustup update && rustup target add x86_64-unknown-linux-musl
