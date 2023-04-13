@@ -8,6 +8,9 @@ ARG RUSTARGS
 
 WORKDIR /root
 
+RUN echo 'TARGETPLATFORM'
+RUN echo ${TARGETPLATFORM}
+
 RUN apt-get update -y && apt-get install -y --no-install-recommends musl-dev
 
 # RUN apk add --no-cache musl-dev=1.2.3-r4
