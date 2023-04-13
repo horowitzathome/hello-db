@@ -20,6 +20,7 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use crate::db_infra_pool;
+    use chrono::{DateTime, Utc};
     use dotenv::dotenv;
 
     #[test]
@@ -28,6 +29,12 @@ mod tests {
         let pg_res = std::env::var("DATABASE_URL");
 
         println!("Postgres URL = {:?}", pg_res);
+
+        let now: DateTime<Utc> = Utc::now();
+
+        println!("UTC now is: {}", now);
+        println!("UTC now in RFC 2822 is: {}", now.to_rfc2822());
+        println!("UTC now in RFC 3339 is: {}", now.to_rfc3339());
     }
 
     #[test]
