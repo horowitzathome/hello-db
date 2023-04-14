@@ -13,7 +13,7 @@ RUN echo 'TARGETPLATFORM = '${TARGETPLATFORM}
 # RUN apt-get update -y && apt-get install -y --no-install-recommends musl-dev
 
 # RUN apk add --no-cache musl-dev=1.2.3-r4
-RUN rustup update && rustup target add x86_64-unknown-linux-musl
+# RUN rustup update && rustup target add x86_64-unknown-linux-musl
 
 RUN cargo install diesel_cli --no-default-features --features postgres
 
